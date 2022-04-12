@@ -29,7 +29,6 @@ func Scrape(term string) {
 	for i := 0; i < totalPages; i++ {
 		go getPage(i, baseURL, c)
 	}
-	fmt.Println(baseURL)
 	for i := 0; i < totalPages; i++ {
 		extractedJobs := <-c
 		jobs = append(jobs, extractedJobs...)
