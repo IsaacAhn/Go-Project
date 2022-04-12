@@ -98,6 +98,9 @@ func writeJobs(jobs []extractedJob) {
 	file, err := os.Create("jobs.csv")
 	checkErr(err)
 
+	utf8bom := []byte{0xEF, 0xBB, 0xBF}
+	file.Write(utf8bom)
+
 	w := csv.NewWriter(file)
 	defer w.Flush()
 
@@ -106,7 +109,7 @@ func writeJobs(jobs []extractedJob) {
 	checkErr(wErr)
 
 	for _, job := range jobs {
-		jobSlice := []string{"https://kr.indeed.com/jobs?jk=" + job.id, job.title, job.location, job.salary, job.summary}
+		jobSlice := []string{"https://kr.indeed.com/viewjob?jk=" + job.id, job.title, job.location, job.salary, job.summary}
 		jwErr := w.Write(jobSlice)
 		checkErr(jwErr)
 	}
